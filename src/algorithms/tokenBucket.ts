@@ -13,16 +13,16 @@ export const tokenBucket = async (
     const bucket = raw ? JSON.parse(raw as string) : {"token": limit, "lastRefill": now}
 
     const elapsed = now - bucket.lastRefill
-    const tokensToAdd = elapsed * rate // 0.001
+    const tokensToAdd = elapsed * rate 
     
-    let newTokens = Math.min(limit, tokensToAdd + bucket.tokens)
+    let newTokens = Math.min(limit, tokensToAdd + bucket.token)
     
     const allowed = newTokens >= 1;
     
     if(allowed){
         newTokens = newTokens - 1
     }
-    
+
     await client.set(redisKey, JSON.stringify({"token":newTokens, "lastRefill": now}))
 
     return {allowed, remaining: newTokens}

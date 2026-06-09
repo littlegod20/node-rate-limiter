@@ -1,9 +1,9 @@
 import client from "../store/redisStore";
 
 export const slidingWindow = async (
-    windowSecs: number,
+    key: string,
     limit: number,
-    key: string
+    windowSecs: number,
 ): Promise<{allowed:boolean, remaining:number}>=>{
     const redisKey = `slw:${key}`
     const now = Date.now()
